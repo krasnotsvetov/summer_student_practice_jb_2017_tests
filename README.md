@@ -14,6 +14,8 @@
 
 Парсить `BSJB` блок не нужно. `MPDB` желательно распаковать перед записью.
 
+[Тестовые данные](/test_data/pe)
+
 Базовае ссылки по теме:
   * https://msdn.microsoft.com/en-us/library/windows/desktop/ms680547.aspx (pecoff.docx)
   * https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Metadata/specs/PE-COFF.md
@@ -22,6 +24,8 @@
 Написать программу для вывода в текстовый файл содержимого `BSJB` блока (`ECMA-335.pdf` II.24 + `PortablePdb-Metadata.md` как расширение ECMA-335) в читаемом формате.
 
 Парсить и выводить данные из `#Blob` стрима метаданных не нужно.
+
+[Тестовые данные](/test_data/md)
 
 Базовае ссылки по теме:
   * https://www.ecma-international.org/publications/files/ECMA-ST/ECMA-335.pdf
