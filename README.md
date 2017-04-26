@@ -30,3 +30,12 @@
 Базовае ссылки по теме:
   * https://www.ecma-international.org/publications/files/ECMA-ST/ECMA-335.pdf
   * https://github.com/dotnet/corefx/blob/master/src/System.Reflection.Metadata/specs/PortablePdb-Metadata.md
+
+## Задание №3
+Написать многопоточный [grep](https://en.wikipedia.org/wiki/Grep) по каталогу, с возможностью поиска с/без учета регистра.
+
+Требования к реализации:
+* Задание должно быть сделано на C++11/14/17, разрешено использовать Boost
+* Работа с FS происходит через [`boost::filesystem`](www.boost.org/doc/libs/release/libs/filesystem/) или [`std::experimental::filesystem`](http://en.cppreference.com/w/cpp/header/experimental/filesystem)
+* Exception-safe code
+* Кроссплатформенность
