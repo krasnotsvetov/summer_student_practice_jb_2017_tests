@@ -39,3 +39,7 @@ Example:
  
  # Warning:
  log4net.bsjb  - does not contains #~ stream, but contains #- stream.
+ 
+ GameOfLife.bsjb - will crash program, because BSJB is not correct ( IMHO )
+ 
+ GameOfLife.exe -f - will crash program too. (I throw exceptions, if can't decode data correct, here it is a CodedIndex in 0x0A Table)
