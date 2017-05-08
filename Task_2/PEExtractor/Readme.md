@@ -1,7 +1,5 @@
-# Task_1
-Extract header information, bsjb, rsds and mpdb information from PE file in two modes:
-1. Extract without loading to memory and execute PE file
-2. Extract with loading and executing this PE file.
+# Task_2
+Extract #BSJB information and all tables.
 
 # How to use:
 
@@ -9,18 +7,29 @@ Example:
 
 1.
   ```
-  PEExtractor MiscEmbedded.dll -rv
+  PEExtractor MiscEmbedded.bsjb
   ```
-
-  The PE file will be loaded to memory and executed( the second argument '-v') and the information will be reporting (-r)
-  
-  WARNING:: if you compile x64 mode, you can execute only x64 library.
-            if you compile with x86 mode, you can execute only x86 library.
-
+  Where MiscEbedded.bsjb should start from BSJB signature
 2.
   ```
-  PEExtractor MiscEmbedded.dll -r
+  PEExtractor MiscEmbedded.dll -f
   ```
- The information will be extracted without executing PE file. So if you compile this PEExtractor in x86 mode, you can use it to extract
- information from different platforms, such as x86, x64, arm e.t.c/
+  Extract from full PE FIle(-f argument)
+  
+  
+  
+ # Note:
  
+ Report will have several files:
+ <file_name>.Tables.Report - file which contains table information in readable form
+ <file_name>.Strings.Report - #Strings heap report
+ <file_name>.GUID.Report - #GUID heap report
+ <file_name>.BSJBMetadata.Report - BSJB root structure report
+ <file_name>.~Stream.Report - #~ stream root structure report
+ <file_name>.PDBStream.Report - #Pdb stream root structure report
+ 
+ # Note:
+ File can be missed if stream or structure is not presented.
+ 
+ # Warning:
+ log4net.bsjb  - does not contains #~ stream, but contains #- stream.
