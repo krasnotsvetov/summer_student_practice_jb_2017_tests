@@ -18,6 +18,8 @@ namespace PEExtractor.Tables
         /// TODO : remove from interface. This method shoud not be public
         void ReadValue(BinaryReader reader, TablesContext context);
 
+        Int32 GetPhysicalSize();
+
         //only for reporting
         void Report(StreamWriter sw);
     }

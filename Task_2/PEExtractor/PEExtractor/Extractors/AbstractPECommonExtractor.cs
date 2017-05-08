@@ -62,6 +62,18 @@ namespace PEExtractor.Extractors
         public PdbStreamInfo PdbStreamInfo { get; protected set; }
 
         /// <summary>
+        /// #Strings information
+        /// </summary>
+        public StringsHeapInfo StringsHeapInfo { get; protected set; }
+
+
+        /// <summary>
+        /// #GUID information
+        /// </summary>
+        public GUIDHeapInfo GUIDHeapInfo { get; protected set; }
+
+
+        /// <summary>
         /// Path to library
         /// </summary>
         public string PEPath     { get; protected set; }
@@ -175,6 +187,8 @@ namespace PEExtractor.Extractors
         /// </summary>
         protected void ExtractStreams()
         {
+            ExtractGUIDHeap();
+            ExtractStringsHeap();
             ExtractPDBStream();
             ExtractTildeStream();
         }
@@ -189,6 +203,16 @@ namespace PEExtractor.Extractors
         /// </summary>
         protected abstract void ExtractTildeStream();
 
+
+        /// <summary>
+        /// Extract Strings heap
+        /// </summary>
+        protected abstract void ExtractStringsHeap();
+
+        /// <summary>
+        /// Extract GUID heap
+        /// </summary>
+        protected abstract void ExtractGUIDHeap();
 
         /// <summary>
         /// Extract CLR header
@@ -224,42 +248,43 @@ namespace PEExtractor.Extractors
         /// </summary>
         public virtual void Report()
         {
-            if (PdbStreamInfo != null)
+            using (var sw = new StreamWriter(new FileStream($"{PEPath}.Report", FileMode.Create)))
             {
-                using (var sw = new StreamWriter(new FileStream($"{PEPath}.PDBStream.Report", FileMode.Create)))
-                {
-                    PdbStreamInfo.Report(sw);
-                }
-            }
 
-            if (TildeStreamInfo != null)
-            {
-                using (var sw = new StreamWriter(new FileStream($"{PEPath}.~Stream.Report", FileMode.Create)))
+
+                if (BSJBInfo != null)
+                {
+                    BSJBInfo.Report(sw);
+                }
+
+                if (PdbStreamInfo != null)
+                {
+                     PdbStreamInfo.Report(sw);
+                }
+
+                if (TildeStreamInfo != null)
                 {
                     TildeStreamInfo.Report(sw);
 
-                    sw.WriteLine($"Tables at { PEPath}.TablesReport");
-                }
+                    sw.WriteLine();
+                    sw.WriteLine("----------------------------");
+                    sw.WriteLine();
 
-                using (var sw = new StreamWriter(new FileStream($"{PEPath}.Tables.Report", FileMode.Create)))
-                {
+                    sw.WriteLine($"|{"ID", -10}\t|\t{"Name", -25}\t|\t{"PhysicalRowSize", -15}\t|\t{"RowCount",-10}|");
+
                     foreach (var t in TildeStreamInfo.Tables.Values)
                     {
-                        t.Report(sw);
-                        sw.WriteLine();
-                        sw.WriteLine();
+                        t.ReportHeader(sw);
+                    }
+
+                    foreach (var t in TildeStreamInfo.Tables.Values)
+                    {
+                        t.Report(sw, StringsHeapInfo, GUIDHeapInfo);
                         sw.WriteLine();
                     }
                 }
             }
 
-            if (BSJBInfo != null)
-            {
-                using (var sw = new StreamWriter(new FileStream($"{PEPath}.BSJBMetadata.Report", FileMode.Create)))
-                {
-                    BSJBInfo.Report(sw);
-                }
-            }
         }
 
         public abstract void Dispose();

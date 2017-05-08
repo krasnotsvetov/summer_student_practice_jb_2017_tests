@@ -23,9 +23,11 @@ namespace PEExtractor.Tables
         /// Value
         /// </summary>
         public uint Value { get; private set; }
-         
+
         ///int32 value is more comfortable for using than either. 
         ///public IEither<UInt32, UInt16> Value;
+    
+        private int physicalSize;
 
         public TableIndex(string name)
         {
@@ -47,15 +49,22 @@ namespace PEExtractor.Tables
             if (rowCount < (1 << 16))
             {
                 Value = reader.ReadUInt16();
+                physicalSize = 2;
             } else
             {
                 Value = reader.ReadUInt32();
+                physicalSize = 4;
             }
         }
 
         public void Report(StreamWriter sw)
         {
             sw.Write(Value);
+        }
+
+        public int GetPhysicalSize()
+        {
+            return physicalSize;
         }
     }
 }

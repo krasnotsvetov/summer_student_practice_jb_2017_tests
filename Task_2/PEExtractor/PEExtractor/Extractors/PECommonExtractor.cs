@@ -119,63 +119,7 @@ namespace PEExtractor.Extractors
                 reader.Close();
                 reader = null;
             }
-        }
+        } 
 
-
-        public override void Report()
-        {
-            base.Report();
-
-            #region GUIDStream
-            int GUIDIndex = GetStreamIndex("#GUID");
-
-            if (GUIDIndex != -1)
-            {
-                using (var sw = new StreamWriter(new FileStream($"{PEPath}.GUID.Report", FileMode.Create)))
-                {
-                    var guidHeader = BSJBInfo.Metadata.StreamHeaders[GUIDIndex];
-                    using (var block = new FileBlock(reader, guidHeader.Size, guidHeader.Offset + BSJBInfo.MetadataRAWPointer, true))
-                    {
-                        var reader = block.BlockReader;
-                        for (int i = 0; i < guidHeader.Size / Marshal.SizeOf(typeof(Guid)); i++) {
-                            sw.WriteLine(new Guid(reader.ReadBytes(16)));
-                        }
-                    }
-                }
-            }
-            #endregion
-
-            #region StringsStream
-            int stringsIndex = GetStreamIndex("#Strings");
-
-            if (stringsIndex != -1)
-            {
-                using (var sw = new StreamWriter(new FileStream($"{PEPath}.Strings.Report", FileMode.Create)))
-                {
-                    var stringsHeader = BSJBInfo.Metadata.StreamHeaders[stringsIndex];
-                    using (var block = new FileBlock(reader, stringsHeader.Size, stringsHeader.Offset + BSJBInfo.MetadataRAWPointer, true))
-                    {
-                        uint size = stringsHeader.Size;
-                        var reader = block.BlockReader;
-                        StringBuilder sb = new StringBuilder();
-                        while (size > 0)
-                        {
-                            if (reader.PeekChar() != 0)
-                            {
-                                sb.Append((char)reader.PeekChar());
-                            } else
-                            {
-                                sw.WriteLine(sb.ToString());
-                                sb.Clear();
-                            }
-                            reader.ReadChar();
-                            size--;
-                        }
-                    }
-                }
-            }
-            #endregion
-
-        }
     }
 }

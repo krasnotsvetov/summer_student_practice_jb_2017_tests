@@ -32,6 +32,11 @@ namespace PEExtractor.Tables
         public UInt32 Value       { get; set; }
         //public IEither<UInt32, UInt16> Value { get; set; }
 
+        /// <summary>
+        /// Size in bytes
+        /// </summary>
+        private int physicalSize;
+
         public HeapIndex(HeapType type)
         {
             HeapType = type; 
@@ -47,16 +52,23 @@ namespace PEExtractor.Tables
             if (context.HeapIndexSize[HeapType] == 2)
             {
                 Value = reader.ReadUInt16();
+                physicalSize = 2;
             }
             else
             {
                 Value = reader.ReadUInt32();
+                physicalSize = 4;
             }
         }
 
         public void Report(StreamWriter sw)
         {
             sw.Write(Value);
+        }
+
+        public int GetPhysicalSize()
+        {
+            return physicalSize;
         }
     }
 }

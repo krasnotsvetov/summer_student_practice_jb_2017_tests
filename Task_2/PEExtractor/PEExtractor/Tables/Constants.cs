@@ -32,6 +32,11 @@ namespace PEExtractor.Tables
         {
             sw.Write(Value);
         }
+
+        public int GetPhysicalSize()
+        {
+            return 4;
+        }
     }
 
     /// <summary>
@@ -55,6 +60,11 @@ namespace PEExtractor.Tables
         {
             sw.Write(Value);
         }
+
+        public int GetPhysicalSize()
+        {
+            return 2;
+        }
     }
 
     /// <summary>
@@ -77,6 +87,11 @@ namespace PEExtractor.Tables
         public void Report(StreamWriter sw)
         {
             sw.Write(Value);
-        }   
+        }
+
+        public int GetPhysicalSize()
+        {
+            return 1;
+        }
     }
 }

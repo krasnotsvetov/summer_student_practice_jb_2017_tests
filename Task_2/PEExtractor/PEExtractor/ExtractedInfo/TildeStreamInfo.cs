@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PEExtractor.Info
 {
-    public partial class TildeStreamInfo
+    public partial class TildeStreamInfo : IExtractable
     {
         /// <summary>
         /// Root structure of #~ stream
@@ -85,6 +85,16 @@ namespace PEExtractor.Info
             {
                 context.NamesToRealNum[tableInfo.Value.Name] = tableInfo.Key;
             }
+
+            bool hasExtra4Bytes = (streamRoot.HeapSizes | 0x40) == streamRoot.HeapSizes;
+
+            ///skip extra byte https://github.com/ww898/summer_student_practice_jb_2017_tests/issues/1
+            if (hasExtra4Bytes)
+            {
+                reader.ReadUInt32();
+            }
+
+
             //Start extract tables
             foreach (var tableInfo in TablesInfo)
             {
@@ -94,10 +104,11 @@ namespace PEExtractor.Info
                 //if #Pdb is include, #~ contains only debugging information tables.  Skip all type system metadata tables;
                 if (pdbStreamInfo != null && tableInfo.Key < 0x30) continue;
 
-                var newTable = new Table(tableInfo.Value.Name,tableInfo.Value.ColumnNames, new RowScheme(tableInfo.Value.Elements));
+                var newTable = new Table(tableInfo.Key, tableInfo.Value);
                 tables[tableInfo.Key] = newTable;
                 for (int i = 0; i < context.RowCount[tableInfo.Key]; i++)
                 {
+                   
                     newTable.ReadAndAddRow(reader, context);
                 }
             }
@@ -110,22 +121,15 @@ namespace PEExtractor.Info
         public void Report(StreamWriter sw)
         {
             sw.WriteLine("#~ stream root structure");
-            sw.WriteLine($"MinorVersion: {streamRoot.MinorVersion}");
-            sw.WriteLine($"MajorVersion: {streamRoot.MajorVersion}");
-            sw.WriteLine($"Valid: {streamRoot.Valid}");
-            sw.WriteLine($"Sorted   : {streamRoot.Sorted}");
+            sw.WriteLine($"\tMinorVersion: {streamRoot.MinorVersion}");
+            sw.WriteLine($"\tMajorVersion: {streamRoot.MajorVersion}");
+            sw.WriteLine($"\tValid: {streamRoot.Valid}");
+            sw.WriteLine($"\tSorted: {streamRoot.Sorted}");
 
             foreach (var kvp in context.HeapIndexSize)
             {
-                sw.WriteLine($"{kvp.Key.ToString()} : {kvp.Value} bytes index");
+                sw.WriteLine($"\t{kvp.Key.ToString()} : {kvp.Value} bytes index");
             }
-
-            sw.WriteLine($"Rows: ");
-            foreach (var r in streamRoot.Rows)
-            {
-                sw.Write($"{r}\t");
-            }
-            sw.WriteLine();
         }
     } 
 }

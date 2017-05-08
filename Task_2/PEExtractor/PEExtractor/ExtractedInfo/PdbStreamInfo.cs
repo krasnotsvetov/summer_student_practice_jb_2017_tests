@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PEExtractor.Info
 {
-    public class PdbStreamInfo
+    public class PdbStreamInfo : IExtractable
     {
         /// <summary>
         /// Root structure of #Pdb stream info
@@ -59,16 +59,10 @@ namespace PEExtractor.Info
         public void Report(StreamWriter sw)
         {
             sw.WriteLine("Pdb stream root structure");
-            sw.WriteLine("ID: ");
+            sw.WriteLine("\tID: ");
             sw.WriteLine(streamRoot.Id.Select(t => (char)t).ToArray());
-            sw.WriteLine($"EntryPoint: {streamRoot.EntryPoint}");
-            sw.WriteLine($"ReferencedTypeSystemTables: {streamRoot.ReferencedTypeSystemTables}");
-            sw.WriteLine($"Rows: ");
-            foreach (var r in streamRoot.TypeSystemTableRows)
-            {
-                sw.Write($"{r}\t");
-            }
-            sw.WriteLine();
+            sw.WriteLine($"\tEntryPoint: {streamRoot.EntryPoint}");
+            sw.WriteLine($"\tReferencedTypeSystemTables: {streamRoot.ReferencedTypeSystemTables}");
         }
     } 
 }

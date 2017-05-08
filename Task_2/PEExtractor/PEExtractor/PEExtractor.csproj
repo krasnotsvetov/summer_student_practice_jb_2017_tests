@@ -81,6 +81,9 @@
   <ItemGroup>
     <Compile Include="Common\StructReporter.cs" />
     <Compile Include="Exceptions\FormatException.cs" />
+    <Compile Include="ExtractedInfo\GUIDHeapInfo.cs" />
+    <Compile Include="ExtractedInfo\IExtractable.cs" />
+    <Compile Include="ExtractedInfo\StringsHeapInfo.cs" />
     <Compile Include="ExtractedInfo\PdbStreamInfo.cs" />
     <Compile Include="ExtractedInfo\TildeStreamInfo.Tables.cs" />
     <Compile Include="ExtractedInfo\TildeStreamInfo.cs" />

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PEExtractor.Info
 {
-    public class BSJBInfo
+    public class BSJBInfo : IExtractable
     {
         /// <summary>
         /// Header

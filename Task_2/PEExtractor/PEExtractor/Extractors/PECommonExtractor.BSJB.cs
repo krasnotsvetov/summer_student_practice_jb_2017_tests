@@ -68,16 +68,53 @@ namespace PEExtractor.Extractors
         protected override void ExtractPDBStream()
         {
             int index = GetStreamIndex("#Pdb");
-            if (index == -1) return;
-
-            var pdbStreamHeader = BSJBInfo.Metadata.StreamHeaders[index];
-            using (var block = new FileBlock(reader, pdbStreamHeader.Size, pdbStreamHeader.Offset + BSJBInfo.MetadataRAWPointer, true))
+            if (index != -1)
             {
                 PdbStreamInfo = new PdbStreamInfo();
-                PdbStreamInfo.Extract(block);
+                ExtractStream(PdbStreamInfo, index);
             }
         }
 
+        /// <summary>
+        /// Extract #Strings heap
+        /// </summary>
+        protected override void ExtractStringsHeap()
+        {
+            int index = GetStreamIndex("#Strings");
+            if (index != -1)
+            {
+                StringsHeapInfo = new StringsHeapInfo();
+                ExtractStream(StringsHeapInfo, index);
+            }
+        }
+
+        /// <summary>
+        /// Extract #GUID heap
+        /// </summary>
+        protected override void ExtractGUIDHeap()
+        {
+            int index = GetStreamIndex("#GUID");
+            if (index != -1)
+            {
+                GUIDHeapInfo = new GUIDHeapInfo();
+                ExtractStream(GUIDHeapInfo, index);
+            }
+        }
+
+
+        /// <summary>
+        /// Extract streamObject
+        /// </summary>
+        /// <param name="streamObject">stream object</param>
+        /// <param name="streamHeaderIndex">stream header index</param>
+        private void ExtractStream(IExtractable streamObject, int streamHeaderIndex)
+        {
+            var streamHeader = BSJBInfo.Metadata.StreamHeaders[streamHeaderIndex];
+            using (var block = new FileBlock(reader, streamHeader.Size, streamHeader.Offset + BSJBInfo.MetadataRAWPointer, true))
+            {
+                streamObject.Extract(block);
+            }
+        }
 
         /// <summary>
         /// Extract #~ stream information
@@ -85,16 +122,19 @@ namespace PEExtractor.Extractors
         protected override void ExtractTildeStream()
         {
             int index = GetStreamIndex("#~");
+
+            ///TODO: #- should have some structure
+            if (index == -1)
+            {
+                index = GetStreamIndex("#-");
+            }
+
             if (index == -1)
             {
                 return;
             }
-            var tildeStreamHeader = BSJBInfo.Metadata.StreamHeaders[index];
-            using (var block = new FileBlock(reader, tildeStreamHeader.Size, tildeStreamHeader.Offset + BSJBInfo.MetadataRAWPointer, true))
-            {
-                TildeStreamInfo = new TildeStreamInfo(PdbStreamInfo);
-                TildeStreamInfo.Extract(block);
-            }
+            TildeStreamInfo = new TildeStreamInfo(PdbStreamInfo);
+            ExtractStream(TildeStreamInfo, index);
         }
 
        

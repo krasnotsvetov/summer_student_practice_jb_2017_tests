@@ -28,8 +28,19 @@ namespace PEExtractor.Tables
         /// </summary>
         public UInt32 RowID { get; private set; }
 
+        /// <summary>
+        /// Table id at tags
+        /// </summary>
+        public Int32 TableTagID { get; private set; }
+
         //public IEither<UInt32, UInt16> Value;
 
+        /// <summary>
+        /// Size in bytes
+        /// </summary>
+        private int physicalSize;
+
+       
 
         public CodedIndex(string tag)
         {
@@ -65,26 +76,41 @@ namespace PEExtractor.Tables
             if (maxRowCount < (1 << (16 - tablesBit)))
             {
                 Value = reader.ReadUInt16();
+                physicalSize = 2;
             }
             else
             {
                 Value = reader.ReadUInt32();
+                physicalSize = 4;
             }
             int mask = (1 << tablesBit) - 1;
-            int tableTagId = (int)Value & mask;
+            TableTagID = (int)Value & mask;
             RowID = Value >> tablesBit;
 
-            if (tableTagId >= tags.Values.Count)
+            if (TableTagID >= tags.Values.Count)
             {
-                throw new Exception("The data is wrong. CodedIndex can't determine table");
+                /// https://github.com/ww898/summer_student_practice_jb_2017_tests/issues/1 
+                /// It's not wrong, it can happend in real life:)
+
+                ///throw new Exception("The data is wrong. CodedIndex can't determine table");
             }
 
-            TableName = tags[(int)tableTagId];
+            if (tags.ContainsKey(TableTagID)) {
+                TableName = tags[TableTagID];
+            } else
+            {
+                TableName = "Undefined, because uncoded value more than count of tables in tags";
+            }
         }
 
         public void Report(StreamWriter sw)
         {
             sw.Write($"{{{TableName} , {RowID}}}");
+        }
+
+        public int GetPhysicalSize()
+        {
+            return physicalSize;
         }
     }
 }
