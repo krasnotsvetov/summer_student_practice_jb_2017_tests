@@ -22,11 +22,17 @@ Example:
  
  Report will have several files:
  <file_name>.Tables.Report - file which contains table information in readable form
+ 
  <file_name>.Strings.Report - #Strings heap report
+ 
  <file_name>.GUID.Report - #GUID heap report
+ 
  <file_name>.BSJBMetadata.Report - BSJB root structure report
- <file_name>.~Stream.Report - #~ stream root structure report
+ 
+ <file_name>.\~Stream.Report - #\~ stream root structure report
+ 
  <file_name>.PDBStream.Report - #Pdb stream root structure report
+ 
  
  # Note:
  File can be missed if stream or structure is not presented.
