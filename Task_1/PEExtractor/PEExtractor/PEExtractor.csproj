@@ -96,7 +96,6 @@
     <Compile Include="Extractors\PECommonExtractor.BSJB.cs" />
     <Compile Include="Extractors\DataBlock\IBlock.cs" />
     <Compile Include="Extractors\DataBlock\FileBlock.cs" />
-    <Compile Include="Extractors\IExtractor.cs" />
     <Compile Include="Extractors\PECommonExtractor.cs" />
     <Compile Include="Common\Extension\BinaryReaderExtension.cs" />
     <Compile Include="Program.cs" />

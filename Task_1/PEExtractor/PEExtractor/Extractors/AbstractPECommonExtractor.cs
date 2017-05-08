@@ -181,7 +181,13 @@ namespace PEExtractor.Extractors
                 sw.WriteLine($"PE name : {PEPath}");
 
                 sw.WriteLine($"Image File Header:");
-                StructReporter.Report(ImageFileHeader, sw, 1);
+                StructReporter.Report(ImageFileHeader, sw, 1,  new SortedSet<string>() {"TimeDateStamp"});
+
+                //convert TimeDateStamp to readable data format
+                DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                origin = origin.AddSeconds(ImageFileHeader.TimeDateStamp);
+
+                sw.WriteLine($"\tTimeDateStamp: {origin}");
 
                 sw.WriteLine();
                 sw.WriteLine();

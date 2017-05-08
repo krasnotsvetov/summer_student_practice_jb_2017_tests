@@ -13,17 +13,10 @@ using System.Threading.Tasks;
 
 namespace PEExtractor.Extractors
 {
-    public partial class PECommonExtractor : AbstractPECommonExtractor
+    public sealed partial class PECommonExtractor : AbstractPECommonExtractor
     {
 
         private BinaryReader reader;
-
-
-
-        protected PECommonExtractor()
-        {
-            reader = null;
-        }
 
         /// <summary>
         /// Open a library file to read(Not load and execute in memory)

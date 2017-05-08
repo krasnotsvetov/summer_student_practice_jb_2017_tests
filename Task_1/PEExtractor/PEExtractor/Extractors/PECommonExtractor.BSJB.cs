@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PEExtractor.Extractors
 {
-    public partial class PECommonExtractor : AbstractPECommonExtractor
+    public sealed partial class PECommonExtractor : AbstractPECommonExtractor
     {
 
         /// <summary>
