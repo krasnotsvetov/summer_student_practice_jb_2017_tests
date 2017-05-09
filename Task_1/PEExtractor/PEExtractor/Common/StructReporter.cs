@@ -35,7 +35,30 @@ namespace PEExtractor.Common
                     Report(field.FieldType, field.GetValue(obj), sw, tabsOffset + 1);
                     continue;
                 }
-                sw.WriteLine(TabOffset(tabsOffset) + $"{field.Name} : {field.GetValue(obj)}");
+
+                var value = field.GetValue(obj);
+                string strValue;
+                if (value is UInt16 || value is Int16)
+                {
+                    value = $"0x{value:X4}";
+                } else if (value is UInt32 || value is Int32)
+                {
+                    value = $"0x{value:X8}";
+                }
+                else if (value is UInt64 || value is Int64)
+                {
+                    value = $"0x{value:X16}";
+                }
+                else if (value is byte)
+                {
+                    value = $"0x{value:X2}";
+                }
+                else
+                {
+                    strValue = value.ToString();
+                }
+
+                sw.WriteLine(TabOffset(tabsOffset) + $"{field.Name} : {value}");
             }
         }
 

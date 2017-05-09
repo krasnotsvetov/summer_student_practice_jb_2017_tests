@@ -16,11 +16,10 @@ namespace PEExtractor
             if (args.Length == 0)
             {
                 Console.WriteLine($"Usage : <PEPath> [args]");
-                Console.WriteLine("Where PEPath : path of PE file\n[args] is additional args. For example use \"-r\" for create report. \r\n \"-rv\" for virtual loading and reporting");
+                Console.WriteLine("Where PEPath : path of PE file\n[args] is additional args.\"v\" for virtual loading");
                 Console.ReadKey();
                 return;
             }
-            bool needReport = args.Length > 1 && args[1].Contains('r');
             bool isVirtual = args.Length > 1 && args[1].Contains('v');
             try
             {
@@ -28,11 +27,8 @@ namespace PEExtractor
                 using (var extractor = isVirtual ? (AbstractPECommonExtractor) new PEVirtualCommonExtractor(args[0]) : new PECommonExtractor(args[0]))
                 {
                     extractor.Extract();
-                    if (needReport)
-                    {
-                        extractor.Report(args[0] + ".report");
-                    }
-                }
+                    extractor.Report(args[0] + ".report");
+            }
             } catch (Exception unhandledException)
             {
                 Console.WriteLine("An error occured");
