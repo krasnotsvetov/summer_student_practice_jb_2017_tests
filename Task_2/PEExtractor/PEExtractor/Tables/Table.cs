@@ -139,7 +139,7 @@ namespace PEExtractor.Tables
                 for (int i = 0; i < rows.Count; i++)
                 {
                     var row = rows[i];
-                    sw.Write($"{$"0x{i + 1:X8}", -15}");
+                    sw.Write($"|{$"0x{i + 1:X8}", -15}");
                     sw.Write("|");
                     foreach (var e in row.Scheme.RowElements)
                     {
