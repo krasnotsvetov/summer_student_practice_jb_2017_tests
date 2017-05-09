@@ -106,11 +106,15 @@ namespace PEExtractor.Info
         /// <param name="sw"></param>
         public void Report(StreamWriter sw)
         {
-            sw.WriteLine("ImageCor20Header: ");
-            StructReporter.Report(ImageCor20Header, sw, 1);
+            if (MetadataRAWPointer != 0)
+            {
+                sw.WriteLine("ImageCor20Header: ");
+                StructReporter.Report(ImageCor20Header, sw, 1);
 
             sw.WriteLine();
             sw.WriteLine();
+            }
+
 
             sw.WriteLine("BSJB Metadata: ");
             StructReporter.Report(Metadata, sw, 1, new SortedSet<string>() {"StreamHeaders"});

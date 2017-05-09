@@ -93,7 +93,7 @@ namespace PEExtractor.Tables
                 sw.WriteLine($"|{rowPhysicalSize,-20}\t|\t{rows.Count,-20}\t|\t{Name, -20}|");
                 sw.WriteLine();
 
-                sw.WriteLine($"|{"Element name",-20}\t|\t{"Element offset",-20}\t|\t{"Element size",-20}\t|\t{"Element type",-30}|");
+                sw.WriteLine($"|{"Element name",-20}\t|\t{"Element offset",-20}\t|\t{"Element size (in bytes)",-20}\t|\t{"Element type",-30}|");
                 int curOffset = 0;
                 for (int i = 0; i < rows[0].Scheme.RowElements.Count; i++)
                 {
@@ -122,23 +122,24 @@ namespace PEExtractor.Tables
                             break;
                     }
 
-                    sw.WriteLine($"|{columnNames[i], -20}\t|\t{$"{curOffset:X8}",-20}\t|\t{element.GetPhysicalSize(),-20}\t|\t{elementType,-30}|");
+                    sw.WriteLine($"|{columnNames[i], -20}\t|\t{$"0x{curOffset:X8}",-20}\t|\t{element.GetPhysicalSize(),-20}\t|\t{elementType,-30}|");
                     curOffset += element.GetPhysicalSize();
                 }
 
                 sw.WriteLine();
 
 
-                sw.Write("|");
+                sw.Write($"|{"№", -15}|");
                 foreach (var s in columnNames)
                 {
                     sw.Write($"{s,-30}|");
                 }
                 sw.WriteLine();
                         
-                foreach (var row in Rows)
+                for (int i = 0; i < rows.Count; i++)
                 {
-                   
+                    var row = rows[i];
+                    sw.Write($"{$"0x{i + 1:X8}", -15}");
                     sw.Write("|");
                     foreach (var e in row.Scheme.RowElements)
                     {
@@ -146,19 +147,25 @@ namespace PEExtractor.Tables
                         switch (e)
                         {
                             case ConstantByte b:
-                                elementValue = $"{b.Value:X2}";
+                                elementValue = $"0x{b.Value:X2}";
                                 break;
                             case ConstantUInt16 i16:
-                                elementValue = $"{i16.Value:X4}";
+                                elementValue = $"0x{i16.Value:X4}";
                                 break;
                             case ConstantUInt32 i32:
-                                elementValue = $"{i32.Value:X8}";
+                                elementValue = $"0x{i32.Value:X8}";
                                 break;
                             case HeapIndex hi:
                                 switch (hi.HeapType)
                                 {
                                     case HeapType.Blob:
-                                        elementValue = $"Index to blob: {hi.Value}";
+                                        if (e.GetPhysicalSize() == 2)
+                                        {
+                                            elementValue = $"Blob: 0x{hi.Value:X4}";
+                                        } else
+                                        {
+                                            elementValue = $"Blob: 0x{hi.Value:X8}";
+                                        }
                                         break;
                                     case HeapType.GUID:
                                         var containGUID = guidInfo.GetGuid((int)hi.Value, out var guid);
@@ -175,10 +182,17 @@ namespace PEExtractor.Tables
                                 }
                                 break;
                             case CodedIndex ci:
-                                elementValue = $"<{ci.TableName}, {ci.RowID}>";
+                                elementValue = $"<{ci.TableName}, {ci.RowID:X8}>";
                                 break;
                             case TableIndex ti:
-                                elementValue = ti.Value.ToString();
+                                if (e.GetPhysicalSize() == 2)
+                                {
+                                    elementValue = $"0x{ti.Value:X4}";
+                                }
+                                else
+                                {
+                                    elementValue = $"0x{ti.Value:X8}";
+                                }
                                 break;
                         }
                         sw.Write($"{elementValue,-30}|");

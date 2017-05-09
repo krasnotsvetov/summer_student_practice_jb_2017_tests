@@ -22,7 +22,7 @@ namespace PEExtractor
                 return;
             }
             bool isFileFull = args.Length > 1 && args[1].Contains('f');
-           // try
+            try
             {
                
                 using (var extractor = new PECommonExtractor(args[0]))
@@ -38,11 +38,11 @@ namespace PEExtractor
                     extractor.Report();
                 }
             } 
-           // catch (Exception unhandledException)
+            catch (Exception unhandledException)
             {
-                //Console.WriteLine("An error occured");
-             //   Console.WriteLine(unhandledException.Message);
-               // Console.ReadKey();
+                  Console.WriteLine("An error occured");
+                  Console.WriteLine(unhandledException.Message);
+                  Console.ReadKey();
             }
         }
 
