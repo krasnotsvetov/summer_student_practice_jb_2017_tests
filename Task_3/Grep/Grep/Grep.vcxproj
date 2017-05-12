@@ -18,6 +18,20 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Grep.h" />
+    <ClInclude Include="ITestTool.h" />
+    <ClInclude Include="PTestTool.h" />
+    <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="Worker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Grep.cpp" />
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="PTestTool.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="Worker.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{005143D1-B5C0-4C3E-9ADC-2D91EA3CD35D}</ProjectGuid>
     <RootNamespace>Grep</RootNamespace>
@@ -109,20 +123,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Grep.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\ITestTool.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\PTestTool.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\ThreadPool.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Worker.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Grep.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Program.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\PTestTool.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\ThreadPool.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Worker.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

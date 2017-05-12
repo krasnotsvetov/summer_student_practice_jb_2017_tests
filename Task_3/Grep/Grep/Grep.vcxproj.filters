@@ -15,36 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Grep.h">
+    <ClInclude Include="Grep.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\ITestTool.h">
+    <ClInclude Include="ITestTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\PTestTool.h">
+    <ClInclude Include="PTestTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\ThreadPool.h">
+    <ClInclude Include="ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Worker.h">
+    <ClInclude Include="Worker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Grep.cpp">
+    <ClCompile Include="Grep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Program.cpp">
+    <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\PTestTool.cpp">
+    <ClCompile Include="PTestTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\ThreadPool.cpp">
+    <ClCompile Include="ThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\..\tempGit\summer_student_practice_jb_2017_tests\Grep\Grep\Worker.cpp">
+    <ClCompile Include="Worker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
