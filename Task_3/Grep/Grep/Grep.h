@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
 #include "ThreadPool.h"
-#include <experimental\filesystem>
+#include <experimental/filesystem>
 
 namespace grep {
 	class Grep {
 	public:
 		Grep(std::string path, std::string word, bool ignoreCaseSensitivity, int threadCount = 8) : pool(threadCount)
 		{
+			this->taskCount = 0;
 			this->path = path;
 			this->word = word;
 			this->ignoreCaseSensitivity = ignoreCaseSensitivity;
@@ -19,8 +20,8 @@ namespace grep {
 		//TODO: should be private, but lambda use them
 
 		ThreadPool pool;
-		void visitFS(std::experimental::filesystem::path path);
-		void testFile(std::experimental::filesystem::directory_entry de);
+		void addVisitor(std::experimental::filesystem::path path);
+		void addTester(std::experimental::filesystem::directory_entry de);
 
 		//TODO:: implent better solution for notifying
 		std::atomic<int> taskCount;

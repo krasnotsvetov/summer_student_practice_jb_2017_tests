@@ -14,9 +14,9 @@ namespace grep {
 			std::mutex m;
 			std::unique_lock<std::mutex> lock(m);
 			
-			visitFS(p);
+			addVisitor(p);
 			notifier.wait(lock, [this]() {return taskCount == 0; });
-
+			
 
 		}
 		else {
@@ -24,17 +24,18 @@ namespace grep {
 		}
 	}
 
-	void Grep::visitFS(filesystem::path rootPath) {
+	///add task for folder visiting
+	void Grep::addVisitor(filesystem::path rootPath) {
 		this->taskCount++;
 		pool.addTask(
 			[rootPath, this]() {
 			for (auto& p : filesystem::directory_iterator(rootPath)) {
 				auto status = p.status();
 				if (filesystem::is_directory(status)) {
-					this->visitFS(p.path());
+					this->addVisitor(p.path());
 				}
-				else if (filesystem::is_regular_file(status) && !filesystem::is_symlink(status)) {
-					testFile(p);
+				else if (filesystem::is_regular_file(status) && !filesystem::is_symlink(status)) { 
+					addTester(p); 
 				}
 			}
 			this->taskCount--;
@@ -44,16 +45,20 @@ namespace grep {
 		}
 		);
 	}
-	void Grep::testFile(std::experimental::filesystem::directory_entry de)
-	{
+		 
+	///add task for file checking
+	void Grep::addTester(std::experimental::filesystem::directory_entry de)
+	{  
 		this->taskCount++;
-		
-		PTestTool tool;
-		tool.test(de, word, ignoreCaseSensitivity);
-
-		taskCount--;
-		if (taskCount == 0) {
-			this->notifier.notify_all();
+  		pool.addTask([de, this]() {
+			PTestTool tool;
+			tool.test(de, word, ignoreCaseSensitivity);
+			this->taskCount--;
+			if (taskCount == 0) {
+				this->notifier.notify_all();
+			}
 		}
+		);
+ 		
 	}
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include <experimental\filesystem>
+#include <experimental/filesystem>
 #include "ITestTool.h"
 #include <fstream>
 #include <string>
@@ -14,7 +14,7 @@ namespace grep {
 		~PTestTool() override {}
 	private:
 		const int BUFF_SIZE = 16384;
-		bool pFunctionTest(std::string & str, std::string & word, bool caseSensitivity);
-		char grep::PTestTool::transformChar(char const c, bool const caseSensitivity);
+		bool pFunctionTest(std::string & str, std::string & word, bool const caseSensitivity);
+		char transformChar(char const c, bool const caseSensitivity);
 	};
 }

@@ -1,6 +1,6 @@
 #include "PTestTool.h"
 
-void grep::PTestTool::test(std::experimental::filesystem::directory_entry const entry, std::string & const word, bool const ignoreCaseSensitivity)
+void grep::PTestTool::test(std::experimental::filesystem::directory_entry const entry, std::string & word, bool const ignoreCaseSensitivity)
 {
 	///
 	try {
@@ -25,7 +25,7 @@ void grep::PTestTool::test(std::experimental::filesystem::directory_entry const 
 	}
 }
 
-bool grep::PTestTool::pFunctionTest(std::string & const str, std::string & const word, bool const ignoreCaseSensitivity)
+bool grep::PTestTool::pFunctionTest(std::string & str, std::string & word, bool const ignoreCaseSensitivity)
 {
 	std::vector<int> arr(str.length());
 	for (size_t i = 1; i < str.length(); i++) {

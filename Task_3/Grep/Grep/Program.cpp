@@ -2,7 +2,7 @@
 #include <thread>
 #include <future>
 #include <vector>
-#include <experimental\filesystem>
+#include <experimental/filesystem>
 #include <string>
 #include "ThreadPool.h"
 #include "Grep.h"
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 	bool ignoreCaseSensitivity = false;
 	
 	if (argc == 4) {
-		ignoreCaseSensitivity = strcmp(argv[3], "-i") == 0;
+		ignoreCaseSensitivity = std::string(argv[3]).compare("-i") == 0;
 	}
 	grep::Grep grep(argv[1], argv[2], ignoreCaseSensitivity);
 	grep.Execute();

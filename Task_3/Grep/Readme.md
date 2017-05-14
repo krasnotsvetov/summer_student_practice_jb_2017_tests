@@ -15,6 +15,8 @@ A simple cross-platform multi-thread grep.
   Grep "C:\Vulkan\" iNt -i
   ```
 
-# TODO
+# Compiling
 
-1. Add make file for UNIX system.
+1. For unix system - makefile
+
+2. For windows system - visual studio project
